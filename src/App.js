@@ -13,31 +13,33 @@ class App extends Component {
   };
 
   handleIncrement = (counter) => {
-    const counters = [...this.state.counters];
-    const index = counters.indexOf(counter);
-    counters[index] = { ...counters[index] };
-    counters[index].value++;
+    const counters = this.state.counters.map((c) =>
+      c.id === counter.id ? { ...c, value: c.value + 1 } : c
+    );
     this.setState({ counters });
   };
 
   handleDecrement = (counter) => {
-    const counters = [...this.state.counters];
-    const index = counters.indexOf(counter);
-    counters[index] = { ...counters[index] };
-    counters[index].value--;
+    const counters = this.state.counters.map((c) =>
+      c.id === counter.id && c.value > 0
+        ? { ...c, value: c.value - 1 }
+        : c
+    );
     this.setState({ counters });
   };
 
   handleReset = () => {
-    const counters = this.state.counters.map((c) => {
-      c.value = 0;
-      return c;
-    });
+    const counters = this.state.counters.map((c) => ({
+      ...c,
+      value: 0,
+    }));
     this.setState({ counters });
   };
 
   handleDelete = (counterId) => {
-    const counters = this.state.counters.filter((c) => c.id !== counterId);
+    const counters = this.state.counters.filter(
+      (c) => c.id !== counterId
+    );
     this.setState({ counters });
   };
 
@@ -46,15 +48,25 @@ class App extends Component {
   };
 
   render() {
+    const activeCount = this.state.counters.filter(
+      (c) => c.value > 0
+    ).length;
+
     return (
       <div className="main__wrap">
         <main className="container">
+
+          {/* 🔥 Deployment Test Banner */}
+          <div style={{ marginTop: "20px", marginBottom: "20px" }}>
+            <h2 style={{ fontWeight: "bold" }}>
+              👋 Hello DevOps Team — Deployment Working ✅
+            </h2>
+            <h5>Version: v1.0.1 🚀</h5>
+          </div>
+
           <div className="card__box">
-            <NavBar
-              totalCounters={
-                this.state.counters.filter((c) => c.value > 0).length
-              }
-            />
+            <NavBar totalCounters={activeCount} />
+
             <Counters
               counters={this.state.counters}
               onReset={this.handleReset}
@@ -64,6 +76,7 @@ class App extends Component {
               onRestart={this.handleRestart}
             />
           </div>
+
         </main>
       </div>
     );
