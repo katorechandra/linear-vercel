@@ -59,7 +59,7 @@ class App extends Component {
           {/* 🔥 Deployment Test Banner */}
           <div style={{ marginTop: "20px", marginBottom: "20px" }}>
             <h2 style={{ fontWeight: "bold" }}>
-              👋 Hello DevOps Team — Deployment Working ✅
+              👋 Hello DevOps — Deployment Working ✅
             </h2>
             <h5>Version: v1.0.1 🚀</h5>
           </div>
